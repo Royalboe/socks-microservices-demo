@@ -25,7 +25,9 @@ services:
           - '/:/host:ro,rslave'
         pid: host
         command:
+          # - mount --make-rshared /
           - '--path.rootfs=/host'
+          # - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
         restart: unless-stopped
         ports:
           - 9100:9100
@@ -56,6 +58,6 @@ services:
       entrypoint: /bin/sh import.sh
       working_dir: /opt/grafana-import-dashboards
       volumes:
-        - ./grafana:/opt/grafana-import-dashboards
+        - ./grafana/:/opt/grafana-import-dashboards
       links:
         - grafana:grafana
